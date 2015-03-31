@@ -1,5 +1,5 @@
 <?php
-namespace Takwtwo\Services;
+namespace Taketwo\Services;
 
 use Taketwo\Models\User;
 use Validator;

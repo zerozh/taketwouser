@@ -1,5 +1,5 @@
 <?php
-namespace TakwTwo\Providers;
+namespace Taketwo\Providers;
 
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'Illuminate\Contracts\Auth\Registrar',
-            'TakeTwo\Services\TakeTwoRegistrar'
+            'Taketwo\Services\Registrar'
         );
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Takwtwo\Providers;
+namespace Taketwo\Providers;
 
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
