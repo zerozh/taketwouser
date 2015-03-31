@@ -68,7 +68,7 @@ class TakeTwoUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $credentials = $this->initCredentials($credentials);
+        $credentials = self::initCredentials($credentials);
 
         if (!isset($credentials['type']) || !$credentials['type']) {
             return null;
@@ -94,7 +94,7 @@ class TakeTwoUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        $credentials = $this->initCredentials($credentials);
+        $credentials = self::initCredentials($credentials);
         /**
          * 第三方登录不验证credential, 本地用户验证密码
          */
@@ -116,7 +116,7 @@ class TakeTwoUserProvider implements UserProvider
      * @param $credentials
      * @return mixed
      */
-    protected function initCredentials($credentials)
+    public static function initCredentials($credentials)
     {
         if (isset($credentials['email']) && $credentials['password']) {
             $credentials['type'] = 'email';
