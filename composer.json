@@ -1,0 +1,10 @@
+{
+  "name": "zerozh/taketwouser",
+  "description": "Take 2 Tables User Authorization",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Taketwo\\": "src/"
+    }
+  }
+}
