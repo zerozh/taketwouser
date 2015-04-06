@@ -35,7 +35,7 @@ class Registrar implements RegistrarContract
 
         $user = new User();
         $user->username = $credentials['name'];
-        $user->email = '';
+        $user->email = $credentials['identifier'];
 //        $user->created_ip = \Request::getClientIp();
 //        $user->updated_ip = \Request::getClientIp();
 //        $user->status = User::STATUS_NORMAL;
