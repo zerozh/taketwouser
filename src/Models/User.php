@@ -16,6 +16,9 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
     const STATUS_NORMAL = 1;
     const STATUS_DISABLE = 0;
 
+    const ROLE_ADMINISTRATOR = 9;
+    const ROLE_MEMBER = 1;
+
     /**
      * The database table used by the model.
      *

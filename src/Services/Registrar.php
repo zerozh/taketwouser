@@ -11,6 +11,7 @@ class Registrar implements RegistrarContract
 
     /**
      * Get a validator for an incoming registration request.
+     * (Only for html register)
      *
      * @param  array $credentials
      * @return \Illuminate\Contracts\Validation\Validator
@@ -34,11 +35,11 @@ class Registrar implements RegistrarContract
         $credentials = TakeTwoUserProvider::initCredentials($credentials);
 
         $user = new User();
-        $user->username = $credentials['name'];
-        $user->email = $credentials['identifier'];
+        $user->username = isset($credentials['name']) ?: '';
+        $user->email = $credentials['type'] == 'email' ? $credentials['identifier'] : '';
+        $user->role = User::ROLE_MEMBER;
 //        $user->created_ip = \Request::getClientIp();
 //        $user->updated_ip = \Request::getClientIp();
-//        $user->status = User::STATUS_NORMAL;
         $user->save();
 
         /**
@@ -48,8 +49,13 @@ class Registrar implements RegistrarContract
         $userAuth->user_id = $user->id;
         $userAuth->type = $credentials['type'];
         $userAuth->identifier = $credentials['identifier'];
-        $userAuth->credential = bcrypt($credentials['credential']);
+
+        /**
+         * keep emtpy for thrid app
+         */
+        $userAuth->credential = strlen($credentials['credential']) > 0 ? bcrypt($credentials['credential']) : '';
         $userAuth->save();
+
         return $user;
     }
 }
