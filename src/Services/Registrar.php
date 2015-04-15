@@ -35,7 +35,7 @@ class Registrar implements RegistrarContract
         $credentials = TakeTwoUserProvider::initCredentials($credentials);
 
         $user = new User();
-        $user->username = isset($credentials['name']) ?: '';
+        $user->username = isset($credentials['name']) ? $credentials['name'] : '';
         $user->email = $credentials['type'] == 'email' ? $credentials['identifier'] : '';
         $user->role = User::ROLE_MEMBER;
 //        $user->created_ip = \Request::getClientIp();
