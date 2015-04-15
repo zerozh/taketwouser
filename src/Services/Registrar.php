@@ -53,7 +53,8 @@ class Registrar implements RegistrarContract
         /**
          * keep emtpy for thrid app
          */
-        $userAuth->credential = strlen($credentials['credential']) > 0 ? bcrypt($credentials['credential']) : '';
+        $userAuth->credential = in_array($credentials['type'], ['email', 'username', 'phone'])
+            ? bcrypt($credentials['credential']) : $credentials['credential'];
         $userAuth->save();
 
         return $user;
