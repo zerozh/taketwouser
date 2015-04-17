@@ -39,4 +39,12 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    
+    /**
+     * Relation
+     */
+    public function auths()
+    {
+        return $this->hasMany('Taketwo\Models\UserAuth');
+    }
 }
