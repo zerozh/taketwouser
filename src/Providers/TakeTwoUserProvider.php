@@ -118,7 +118,7 @@ class TakeTwoUserProvider implements UserProvider
      */
     public static function initCredentials($credentials)
     {
-        if (isset($credentials['email']) && $credentials['password']) {
+        if (isset($credentials['email']) && isset($credentials['password'])) {
             $credentials['type'] = 'email';
             $credentials['identifier'] = $credentials['email'];
             $credentials['credential'] = $credentials['password'];
