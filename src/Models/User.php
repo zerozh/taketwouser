@@ -47,4 +47,9 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
     {
         return $this->hasMany('Taketwo\Models\UserAuth');
     }
+    
+    public function getEmailForPasswordReset()
+    {
+        return $this->auths()->where('type', 'email')->first()->email;
+    }
 }
