@@ -7,7 +7,7 @@ use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Taketwo\Models\User;
 use Taketwo\Models\UserAuth;
 
-class UserProvider implements UserProviderContract
+class TaketwoUserProvider implements UserProviderContract
 {
     /**
      * The hasher implementation.

@@ -3,14 +3,14 @@ namespace Taketwo\Providers;
 
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
-use Taketwo\Foundation\UserProvider;
+use Taketwo\Foundation\TaketwoUserProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         \Auth::extend('taketwo', function ($app) {
-            $provider = new UserProvider($app['hash']);
+            $provider = new TaketwoUserProvider($app['hash']);
 
             return new Guard($provider, $app['session.store']);
         });

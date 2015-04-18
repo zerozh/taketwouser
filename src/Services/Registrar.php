@@ -3,7 +3,7 @@ namespace Taketwo\Services;
 
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
-use Taketwo\Foundation\UserProvider;
+use Taketwo\Foundation\TaketwoUserProvider;
 use Taketwo\Models\User;
 use Taketwo\Models\UserAuth;
 
@@ -33,7 +33,7 @@ class Registrar implements RegistrarContract
      */
     public function create(array $credentials)
     {
-        $credentials = UserProvider::initCredentials($credentials);
+        $credentials = TaketwoUserProvider::initCredentials($credentials);
 
         $user = new User();
         $user->username = isset($credentials['name']) ? $credentials['name'] : '';

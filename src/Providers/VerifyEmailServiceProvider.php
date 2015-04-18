@@ -27,8 +27,8 @@ class VerifyEmailServiceProvider extends ServiceProvider
      */
     protected function registerVerifyEmailBroker()
     {
-        $this->app->singleton('verify.email', function ($app) {
-            $tokens = $app['verify.email.tokens'];
+        $this->app->singleton('Taketwo\Contracts\VerifyEmailBroker', function ($app) {
+            $tokens = $app['Taketwo\Contracts\TokenRepositoryInterface'];
             $users = $app['auth']->driver()->getProvider();
             $view = $app['config']['auth.email_verify.email'];
 
@@ -43,7 +43,7 @@ class VerifyEmailServiceProvider extends ServiceProvider
      */
     protected function registerTokenRepository()
     {
-        $this->app->singleton('verify.email.tokens', function ($app) {
+        $this->app->singleton('Taketwo\Contracts\TokenRepositoryInterface', function ($app) {
             $connection = $app['db']->connection();
             $table = $app['config']['auth.email_verify.table'];
             $key = $app['config']['app.key'];
@@ -55,6 +55,6 @@ class VerifyEmailServiceProvider extends ServiceProvider
 
     public function provides()
     {
-        return ['verify.email', 'verify.email.tokens'];
+        return ['Taketwo\Contracts\VerifyEmailBroker', 'Taketwo\Contracts\TokenRepositoryInterface'];
     }
 }
