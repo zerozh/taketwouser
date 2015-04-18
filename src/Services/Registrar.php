@@ -3,8 +3,9 @@ namespace Taketwo\Services;
 
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
-use Taketwo\Providers\TakeTwoUserProvider;
-use Taketwo\Models\User, Taketwo\Models\UserAuth;
+use Taketwo\Foundation\UserProvider;
+use Taketwo\Models\User;
+use Taketwo\Models\UserAuth;
 
 class Registrar implements RegistrarContract
 {
@@ -32,26 +33,21 @@ class Registrar implements RegistrarContract
      */
     public function create(array $credentials)
     {
-        $credentials = TakeTwoUserProvider::initCredentials($credentials);
+        $credentials = UserProvider::initCredentials($credentials);
 
         $user = new User();
         $user->username = isset($credentials['name']) ? $credentials['name'] : '';
         $user->email = $credentials['type'] == 'email' ? $credentials['identifier'] : '';
         $user->role = User::ROLE_MEMBER;
-//        $user->created_ip = \Request::getClientIp();
-//        $user->updated_ip = \Request::getClientIp();
         $user->save();
 
-        /**
-         * add user_auth
-         */
         $userAuth = new UserAuth();
         $userAuth->user_id = $user->id;
         $userAuth->type = $credentials['type'];
         $userAuth->identifier = $credentials['identifier'];
 
         /**
-         * keep emtpy for thrid app
+         * crypt password but leave original text for 3rd app
          */
         $userAuth->credential = in_array($credentials['type'], ['email', 'username', 'phone'])
             ? bcrypt($credentials['credential']) : $credentials['credential'];

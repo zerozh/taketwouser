@@ -1,21 +1,17 @@
 <?php
 namespace Taketwo\Models;
 
-//use App\Services\Extend\IpTrait;
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Taketwo\Contracts\CanVerifyEmail as CanVerifyEmailContract;
 
-class User extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract
+class User extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract, CanVerifyEmailContract
 {
-
-    use Authenticatable, CanResetPassword;
-//    use IpTrait;
+    use Authenticatable;
 
     const STATUS_NORMAL = 1;
     const STATUS_DISABLE = 0;
-
     const ROLE_ADMINISTRATOR = 9;
     const ROLE_MEMBER = 1;
 
@@ -31,15 +27,15 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
-    
+    protected $hidden = ['remember_token'];
+
     /**
      * Relation
      */
@@ -47,9 +43,24 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
     {
         return $this->hasMany('Taketwo\Models\UserAuth');
     }
-    
+
+    public function getAuthPassword()
+    {
+        return $this->auths()->where('type', 'email')->first()->credential;
+    }
+
     public function getEmailForPasswordReset()
     {
         return $this->auths()->where('type', 'email')->first()->email;
+    }
+
+    public function getEmailForVerify()
+    {
+        return $this->auths()->where('type', 'email')->first()->email;
+    }
+
+    public function was_verified()
+    {
+        return $this->auths()->where('type', 'email')->first()->verified;
     }
 }

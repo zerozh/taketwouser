@@ -1,12 +1,13 @@
 <?php
-namespace Taketwo\Providers;
+namespace Taketwo\Foundation;
 
-use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Auth\UserProvider as UserProviderContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use Taketwo\Models\User, Taketwo\Models\UserAuth;
+use Taketwo\Models\User;
+use Taketwo\Models\UserAuth;
 
-class TakeTwoUserProvider implements UserProvider
+class UserProvider implements UserProviderContract
 {
     /**
      * The hasher implementation.
@@ -77,7 +78,8 @@ class TakeTwoUserProvider implements UserProvider
             return null;
         }
 
-        $userAuth = UserAuth::where('type', $credentials['type'])->where('identifier', $credentials['identifier'])->first();
+        $userAuth = UserAuth::where('type', $credentials['type'])->where('identifier',
+            $credentials['identifier'])->first();
         if (!$userAuth) {
             return null;
         }
@@ -102,6 +104,7 @@ class TakeTwoUserProvider implements UserProvider
             $userAuth = UserAuth::where('user_id', $user->id)->where('type', $credentials['type'])->first();
             if ($this->hasher->check($credentials['credential'], $userAuth->credential)) {
                 $userAuth->touch();
+
                 return true;
             } else {
                 return false;
@@ -125,6 +128,7 @@ class TakeTwoUserProvider implements UserProvider
             unset($credentials['email']);
             unset($credentials['password']);
         }
+
         return $credentials;
     }
 }
