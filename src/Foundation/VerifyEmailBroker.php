@@ -74,7 +74,7 @@ class VerifyEmailBroker implements VerifyEmailBrokerContract
             return VerifyEmailBrokerContract::INVALID_USER;
         }
 
-        if ($user->was_verified()) {
+        if ($user->wasEmailVerified()) {
             return VerifyEmailBrokerContract::WAS_VERIFIED;
         }
 

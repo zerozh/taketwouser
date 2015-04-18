@@ -59,7 +59,7 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
         return $this->auths()->where('type', 'email')->first()->email;
     }
 
-    public function was_verified()
+    public function wasEmailVerified()
     {
         return $this->auths()->where('type', 'email')->first()->verified;
     }

@@ -5,5 +5,5 @@ interface CanVerifyEmail
 {
     public function getEmailForVerify();
 
-    public function was_verified();
+    public function wasEmailVerified();
 }
