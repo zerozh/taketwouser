@@ -51,12 +51,12 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
 
     public function getEmailForPasswordReset()
     {
-        return $this->auths()->where('type', 'email')->first()->email;
+        return $this->auths()->where('type', 'email')->first()->identifier;
     }
 
     public function getEmailForVerify()
     {
-        return $this->auths()->where('type', 'email')->first()->email;
+        return $this->auths()->where('type', 'email')->first()->identifier;
     }
 
     public function wasEmailVerified()

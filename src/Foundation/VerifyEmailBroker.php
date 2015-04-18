@@ -67,13 +67,25 @@ class VerifyEmailBroker implements VerifyEmailBrokerContract
      * @param  \Closure|null $callback
      * @return string
      */
-    public function sendVerifyLink(array $credentials, Closure $callback = null)
+    public function sendVerifyLinkWithCredentials(array $credentials, Closure $callback = null)
     {
         $user = $this->getUser($credentials);
         if (is_null($user)) {
             return VerifyEmailBrokerContract::INVALID_USER;
         }
 
+        return $this->sendVerifyLinkWithUser($user, $callback);
+    }
+
+    /**
+     * Send a email varify link to a user.
+     *
+     * @param  \Taketwo\Contracts\CanVerifyEmail $user
+     * @param  \Closure|null $callback
+     * @return string
+     */
+    public function sendVerifyLinkWithUser(CanVerifyEmail $user, Closure $callback = null)
+    {
         if ($user->wasEmailVerified()) {
             return VerifyEmailBrokerContract::WAS_VERIFIED;
         }

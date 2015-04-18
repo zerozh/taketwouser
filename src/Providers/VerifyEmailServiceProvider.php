@@ -21,7 +21,7 @@ class VerifyEmailServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the password broker instance.
+     * Register the verify email broker instance.
      *
      * @return void
      */
